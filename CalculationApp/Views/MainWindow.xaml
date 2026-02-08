@@ -39,6 +39,15 @@
             <Setter Property="Foreground" Value="#2266AA" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        <Style x:Key="GroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontWeight="Bold" FontSize="14" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="16">
@@ -54,7 +63,8 @@
                    Text="サブスク管理カリキュレーター" />
 
         <!-- Input Area -->
-        <GroupBox Grid.Row="1" Header="サブスクを追加" Margin="0,0,0,10" Padding="8">
+        <GroupBox Grid.Row="1" Header="サブスクを追加" Margin="0,0,0,10" Padding="8"
+                  Style="{StaticResource GroupBoxStyle}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -91,7 +101,8 @@
         </GroupBox>
 
         <!-- Subscription List -->
-        <GroupBox Grid.Row="2" Header="登録済みサブスク" Padding="8">
+        <GroupBox Grid.Row="2" Header="登録済みサブスク" Padding="8"
+                  Style="{StaticResource GroupBoxStyle}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -131,7 +142,8 @@
         </GroupBox>
 
         <!-- Summary -->
-        <GroupBox Grid.Row="3" Header="合計" Margin="0,10,0,0" Padding="8">
+        <GroupBox Grid.Row="3" Header="合計" Margin="0,10,0,0" Padding="8"
+                  Style="{StaticResource GroupBoxStyle}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
