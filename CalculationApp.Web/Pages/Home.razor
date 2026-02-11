@@ -1,0 +1,152 @@
+@page "/"
+@using CalculationApp.Web.Models
+
+<PageTitle>サブスク管理カリキュレーター</PageTitle>
+
+<div class="app-container">
+    <h1 class="app-header">サブスク管理カリキュレーター</h1>
+
+    <!-- 入力エリア -->
+    <div class="section-box">
+        <h2 class="section-title">サブスクを追加</h2>
+        <div class="form-row">
+            <label class="form-label">サービス名</label>
+            <input type="text" class="form-input" @bind="newName" @bind:event="oninput" />
+        </div>
+        <div class="form-row">
+            <label class="form-label">月額（円）</label>
+            <input type="text" class="form-input" @bind="newPrice" @bind:event="oninput" />
+        </div>
+        <div class="form-row">
+            <label class="form-label">カテゴリ</label>
+            <select class="form-input" @bind="selectedCategory">
+                @foreach (var category in categories)
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+        </div>
+        <div class="form-row">
+            <div class="form-label"></div>
+            <div class="form-input-area">
+                <button class="action-button" @onclick="AddSubscription" disabled="@(!CanAdd)">追加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登録済みサブスク -->
+    <div class="section-box list-section">
+        <h2 class="section-title">登録済みサブスク</h2>
+        <table class="sub-table">
+            <thead>
+                <tr>
+                    <th class="col-name">サービス名</th>
+                    <th class="col-price">月額（円）</th>
+                    <th class="col-category">カテゴリ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (subscriptions.Count == 0)
+                {
+                    <tr>
+                        <td colspan="3" class="empty-message">サブスクが登録されていません</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var sub in subscriptions)
+                    {
+                        <tr class="@(sub == selectedSubscription ? "selected" : "")"
+                            @onclick="() => SelectSubscription(sub)">
+                            <td>@sub.Name</td>
+                            <td class="price-cell">@sub.MonthlyPrice.ToString("#,0")</td>
+                            <td>@sub.Category</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="delete-row">
+            <button class="action-button delete-button" @onclick="DeleteSubscription"
+                    disabled="@(selectedSubscription == null)">
+                選択したサブスクを削除
+            </button>
+        </div>
+    </div>
+
+    <!-- 合計 -->
+    <div class="section-box">
+        <h2 class="section-title">合計</h2>
+        <div class="summary-row">
+            <div class="summary-item">
+                <div class="summary-label">月額合計</div>
+                <div class="summary-value">¥@MonthlyTotal.ToString("#,0")</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">年間合計</div>
+                <div class="summary-value">¥@YearlyTotal.ToString("#,0")</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">1日あたり</div>
+                <div class="summary-value">¥@DailyAmount</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Subscription> subscriptions = new();
+    private Subscription? selectedSubscription;
+
+    private string newName = string.Empty;
+    private string newPrice = string.Empty;
+    private string selectedCategory = "動画配信";
+
+    private List<string> categories = new()
+    {
+        "動画配信",
+        "音楽配信",
+        "ゲーム",
+        "クラウド",
+        "その他"
+    };
+
+    private bool CanAdd =>
+        !string.IsNullOrWhiteSpace(newName)
+        && int.TryParse(newPrice, out int price)
+        && price > 0;
+
+    private int MonthlyTotal => subscriptions.Sum(s => s.MonthlyPrice);
+    private int YearlyTotal => MonthlyTotal * 12;
+    private string DailyAmount => $"{MonthlyTotal * 12 / 365.0:F1}";
+
+    private void AddSubscription()
+    {
+        if (!CanAdd) return;
+
+        subscriptions.Add(new Subscription
+        {
+            Name = newName.Trim(),
+            MonthlyPrice = int.Parse(newPrice),
+            Category = selectedCategory
+        });
+
+        newName = string.Empty;
+        newPrice = string.Empty;
+        selectedCategory = "動画配信";
+    }
+
+    private void SelectSubscription(Subscription sub)
+    {
+        selectedSubscription = selectedSubscription == sub ? null : sub;
+    }
+
+    private void DeleteSubscription()
+    {
+        if (selectedSubscription != null)
+        {
+            subscriptions.Remove(selectedSubscription);
+            selectedSubscription = null;
+        }
+    }
+}

@@ -1,0 +1,241 @@
+html, body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* アプリコンテナ */
+.app-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 16px;
+    background-color: #fff;
+    min-height: 100vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ヘッダー */
+.app-header {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* セクションボックス (GroupBox相当) */
+.section-box {
+    border: 1px solid #d5dfe5;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+}
+
+/* フォーム行 */
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.form-label {
+    width: 90px;
+    font-size: 13px;
+    text-align: right;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.form-input {
+    flex: 1;
+    font-size: 13px;
+    padding: 4px 6px;
+    border: 1px solid #adb2b5;
+    border-radius: 2px;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: #0078d4;
+    box-shadow: 0 0 0 1px #0078d4;
+}
+
+.form-input-area {
+    flex: 1;
+    text-align: right;
+}
+
+select.form-input {
+    padding: 3px 4px;
+}
+
+/* ボタン */
+.action-button {
+    font-size: 13px;
+    padding: 6px 16px;
+    cursor: pointer;
+    background-color: #e1e1e1;
+    border: 1px solid #adadad;
+    border-radius: 2px;
+}
+
+.action-button:hover:not(:disabled) {
+    background-color: #d0d0d0;
+}
+
+.action-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* サブスクリストセクション */
+.list-section {
+    flex: 1;
+}
+
+/* テーブル */
+.sub-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.sub-table thead th {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.sub-table tbody tr {
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.sub-table tbody tr:hover {
+    background-color: #f0f6ff;
+}
+
+.sub-table tbody tr.selected {
+    background-color: #cce4ff;
+}
+
+.sub-table td {
+    padding: 6px 8px;
+}
+
+.col-name {
+    width: auto;
+}
+
+.col-price {
+    width: 100px;
+}
+
+.col-category {
+    width: 100px;
+}
+
+.price-cell {
+    text-align: right;
+    padding-right: 16px !important;
+}
+
+.empty-message {
+    text-align: center;
+    color: #999;
+    padding: 20px 0 !important;
+}
+
+/* 削除ボタン行 */
+.delete-row {
+    text-align: right;
+    margin-top: 8px;
+}
+
+/* 合計セクション */
+.summary-row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.summary-item {
+    text-align: center;
+}
+
+.summary-label {
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2266AA;
+}
+
+/* Blazorエラー表示 */
+#blazor-error-ui {
+    color-scheme: light only;
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+/* ローディング */
+.loading-progress {
+    position: absolute;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    inset: 20vh 0 auto 0;
+    margin: 0 auto 0 auto;
+}
+
+.loading-progress circle {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-width: 0.6rem;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.loading-progress circle:last-child {
+    stroke: #1b6ec2;
+    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+    transition: stroke-dasharray 0.05s ease-in-out;
+}
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+.loading-progress-text:after {
+    content: var(--blazor-load-percentage-text, "Loading");
+}
